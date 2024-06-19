@@ -1,20 +1,24 @@
-const user = require('./models/user.js')
+const store = require('./models/store.js')
 
 module.exports = (io)=> {
-    io.use((socket, next) => {
-        const { token } = socket.handshake.auth;
-        if (!token) {
-            return next(new Error("Authentication failed"));
-        }
-        next();
-    });
-
-    io.on("connection", async (socket) => {
+    io.on("connect", async (socket) => {
         console.log('user connected', socket.id)
         socket.on("joinRoom", async(roomName) => {
             socket.join(roomName.room);
         });
-    
+
+        socket.on("getList",async()=>{
+            const data = await store.find().sort({_id:'desc'});
+            io.to(socket.id).emit('getList',data) 
+        })
+
+        socket.on("add",async(data)=>{
+        // we can make the file upload api and get the name and file path on frontend 
+        // we can apply the validation 
+            const datas = await store.create(data)
+            io.to(socket.id).emit('add',datas) 
+        })
+
         socket.on("sendMessage", (data) => {
             const { room, message } = data;
             io.to(room).emit("message", {message:message});
