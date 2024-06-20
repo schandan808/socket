@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.horizontal-form {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line if needed */
+  gap: 20px; /* Space between each form element */
+  align-items: center; /* Centers items vertically */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 5px;
+  margin-bottom: 10px; /* Add space between form groups and input fields */
+}
+
+.horizontal-form button {
+  align-self: flex-end; /* Align the button to the end */
+  padding: 5px 10px;
+}
