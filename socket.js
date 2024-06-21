@@ -9,10 +9,10 @@ module.exports = (io) => {
       try {
       const {room}= roomName
        socket.join(room);
-        io.to(room).emit("joinRoom",{room});
+        io.to(room).emit("joinRoom",{...roomName});
       } catch (error) {
         socket.emit('error', { message: error.message });
-      } const {room} = roomName
+      }
         
     });
 
@@ -37,7 +37,7 @@ module.exports = (io) => {
     socket.on("sendMessage", (data) => {
       try {
         const { room, message } = data;
-        io.to(room).emit("message", { message });
+        io.to(room).emit("message", {... data });
       } catch (error) {
         socket.emit('error', { message: error.message });
       }
